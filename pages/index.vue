@@ -3,5 +3,7 @@
 </script>
 
 <template>
-    <div>init</div>
+    <div>
+        <Icon name="uil:github" color="black" />
+    </div>
 </template>
