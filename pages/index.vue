@@ -2,139 +2,50 @@
 import { type INote } from 'components/AsideNote.vue';
 
 const showNoteList = ref<boolean>(false);
-const canEdit = ref<boolean>(false);
+const canEditNote = ref<boolean>(false);
+const activeNote = ref<number>(0);
 
-let notes: INote[] = reactive([
-    {
-        id: 3,
-        title: "note 2 sdsdfs sdfsf sf s df dfdf df dfd ",
-        dateTime: '12:23',
-        dateFull: '23/23/344',
-        description: 'dfdfhg s sf sdf sd sd sds dffd f df df f df df',
-        active: true
-    },
-    {
-        id: 2,
-        title: "note 1",
-        dateTime: '12:26',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
-    },
-    {
-        id: 3,
-        title: "note 4",
-        dateTime: '12:22',
-        dateFull: '23/23/344',
-        description: 'dfdf'
+let notes: INote[] = reactive([]);
+
+function addNote() {
+    const newNote = {
+        id: Date.now(),
+        title: 'New Note',
+        dateFull: new Date(Date.now()).toLocaleString(),
+        dateTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        description: 'No additional text'
     }
-]);
+    notes.unshift(newNote);
+    activeNote.value = 0;
+    canEditNote.value = false;
+}
 
+function setActiveNote(index: number) {
+    canEditNote.value = false;
+    activeNote.value = index;
+}
+
+function deleteNote() {
+    if (window.confirm("Do you really want to delete this Note?")) {
+        notes.splice(activeNote.value, 1)
+    }
+}
 </script>
 
 <template>
     <div class="wrapper">
         <aside :class="{ 'show': showNoteList }">
             <header>
-                <button>
+                <button @click="addNote">
                     <Icon name="material-symbols:add" />
                 </button>
-                <button>
+                <button @click="deleteNote">
                     <Icon name="simple-line-icons:trash" />
                 </button>
             </header>
             <div class="note__wrapper">
-                <AsideNote v-for=" note  in  notes " :key="note.id" v-bind="note" />
+                <AsideNote v-for="(note, index) in notes" :key="note.id" :note="note" :activeNote="index == activeNote"
+                    @click="setActiveNote(index)" />
             </div>
         </aside>
         <main>
@@ -142,13 +53,16 @@ let notes: INote[] = reactive([
                 <button class="button__to__notes" @click="showNoteList = !showNoteList">
                     <Icon name="formkit:arrowleft" /> Notes
                 </button>
-                <button :class="['edit', { 'active': canEdit }]" @click="canEdit = !canEdit">
+                <button :class="['edit', { 'active': canEditNote }]" @click="canEditNote = !canEditNote">
                     <Icon name="bx:edit" />
                 </button>
                 <SearchInput />
             </header>
-            <div class="main__date">23/23/344 12:22</div>
-            <textarea name="activeNote" placeholder="No additional text" :class="{ 'active': canEdit }"></textarea>
+            <template v-if="notes.length">
+                <div class="main__date">{{ notes[activeNote].dateFull }}</div>
+                <textarea v-model="notes[activeNote].description" name="activeNote" placeholder="No additional text"
+                    :class="{ 'active': canEditNote }"></textarea>
+            </template>
         </main>
     </div>
 </template>

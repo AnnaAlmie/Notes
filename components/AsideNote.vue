@@ -5,26 +5,22 @@ export interface INote {
     title: string,
     dateFull: Date | string,
     dateTime: Date | string,
-    description: string,
-    active?: boolean
+    description: string
 }
 
-withDefaults(defineProps<INote>(), {
-    id: Date.now(),
-    title: 'New Note',
-    dateFull: new Date(Date.now()).toLocaleString(),
-    dateTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    description: 'No additional text'
-})
+defineProps<{
+    note: INote,
+    activeNote?: boolean
+}>()
 
 </script> 
 
 <template>
-    <div :class="['note', { 'active': active }]">
-        <h4 class="note__title text__overflow">{{ title }}</h4>
+    <div :class="['note', { 'active': activeNote }]">
+        <h4 class="note__title text__overflow">{{ note.title }}</h4>
         <div class="note__descriprion">
-            <date>{{ dateTime }}</date>
-            <span class="text__overflow">{{ description }}</span>
+            <date>{{ note.dateTime }}</date>
+            <span class="text__overflow">{{ note.description }}</span>
         </div>
     </div>
 </template>
