@@ -1,5 +1,117 @@
 @import './_normalize.scss';
+@import './_variables.scss';
+@import './_scroll.scss';
 
 body {
-    color: red
+    color: $color_black;
+    font-family: $font_main;
+    font-size: 16px;
+    line-height: 1.15;
+}
+
+//icons
+button {
+    all: unset;
+    cursor: pointer;
+    margin-right: $size_large;
+
+    &:hover {
+        svg {
+            color: $color_black;
+        }
+    }
+}
+
+.edit.active {
+    svg {
+        color: $color_black;
+    }
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+    color: $color_grey;
+    transition: $transition_all;
+}
+
+textarea {
+    width: 100%;
+    height: calc(100% - 88px);
+    border: none;
+    outline: none;
+
+    &:not(.active) {
+        pointer-events: none;
+    }
+}
+
+.text__overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+//main block
+
+.wrapper {
+    min-height: 100vh;
+
+    header {
+        padding-bottom: $size_large;
+        display: flex;
+        align-items: center;
+    }
+
+    aside {
+        border-right: 1px solid $color_grey_light;
+        padding: $size_large;
+        background-color: #fff;
+        z-index: 1;
+    }
+
+    main {
+        padding: $size_large;
+
+        .main__date {
+            color: $color_grey;
+            text-align: center;
+            margin-bottom: $size_large;
+        }
+    }
+
+    @include mobile_only {
+        aside {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100vw;
+            transition: $transition_all;
+
+            &.show {
+                left: 0;
+            }
+        }
+    }
+
+    @include more_then_mobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+
+        aside {
+            width: 100%;
+            max-width: $size_aside;
+        }
+
+        main {
+            width: calc(100% - $size_aside);
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
 }
