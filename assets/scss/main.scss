@@ -37,13 +37,9 @@ svg {
 
 textarea {
     width: 100%;
-    height: calc(100% - 88px);
+    height: calc(100vh - 125px);
     border: none;
     outline: none;
-
-    &:not(.active) {
-        pointer-events: none;
-    }
 }
 
 .text__overflow {
@@ -86,6 +82,7 @@ textarea {
             top: 0;
             left: -100%;
             width: 100vw;
+            height: 100vh;
             transition: $transition_all;
 
             &.show {

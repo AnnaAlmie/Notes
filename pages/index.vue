@@ -16,13 +16,13 @@ function addNote() {
         description: 'No additional text'
     }
     notes.unshift(newNote);
-    activeNote.value = 0;
-    canEditNote.value = false;
+    setActiveNote(0);
 }
 
 function setActiveNote(index: number) {
     canEditNote.value = false;
     activeNote.value = index;
+    showNoteList.value = false;
 }
 
 function deleteNote() {
@@ -61,7 +61,7 @@ function deleteNote() {
             <template v-if="notes.length">
                 <div class="main__date">{{ notes[activeNote].dateFull }}</div>
                 <textarea v-model="notes[activeNote].description" name="activeNote" placeholder="No additional text"
-                    :class="{ 'active': canEditNote }"></textarea>
+                    :readOnly="!canEditNote"></textarea>
             </template>
         </main>
     </div>
