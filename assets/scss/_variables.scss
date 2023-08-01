@@ -1,0 +1,33 @@
+//colors
+$color_black: #252525;
+$color_grey: lighten($color_black, 40%);
+$color_grey_light: lighten($color_black, 80%);
+$color_active: #ffe668;
+
+//typography 
+$font_main: 'Trebuchet MS', 'Tahoma', 'sans-serif';
+
+//sizes
+$size_small: 6px;
+$size: 10px;
+$size_large: 20px;
+$size_aside: 250px;
+
+//helpers
+$transition_all: all 200ms ease-in-out;
+
+//media
+$breakpoint_mobile: 700px;
+$breakpoint_more_then_mobile: $breakpoint_mobile + 1;
+
+@mixin mobile_only {
+    @media screen and (max-width: $breakpoint_mobile) {
+        @content;
+    }
+}
+
+@mixin more_then_mobile {
+    @media screen and (min-width: $breakpoint_more_then_mobile) {
+        @content;
+    }
+}
