@@ -7,7 +7,6 @@ const activeNote = ref<number>(0);
 let notes: INote[] = reactive([]);
 
 const searchValue = ref<string>('');
-
 const textarea = ref<string>('');
 
 watch(searchValue, () => {
@@ -22,6 +21,7 @@ function addNote() {
         title: 'New Note',
         dateFull: new Date(Date.now()).toLocaleString(),
         dateTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        miniDescription: 'No additional text',
         description: 'No additional text'
     }
     notes.unshift(newNote);
@@ -40,6 +40,12 @@ function deleteNote() {
     }
 }
 
+function saveChanges() {
+    const thisNote = notes[activeNote.value];
+    const splittedText = thisNote.description.split('\n');
+    thisNote.title = splittedText[0];
+    thisNote.miniDescription = splittedText[1];
+}
 </script>
 
 <template>
@@ -73,7 +79,7 @@ function deleteNote() {
 
                 <div v-if="searchValue" v-html="textarea"></div>
                 <textarea v-else v-model="notes[activeNote].description" placeholder="No additional text"
-                    :readOnly="!canEditNote"></textarea>
+                    :readOnly="!canEditNote" @blur="saveChanges"></textarea>
             </template>
         </main>
     </div>

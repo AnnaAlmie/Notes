@@ -5,6 +5,7 @@ export interface INote {
     title: string,
     dateFull: Date | string,
     dateTime: Date | string,
+    miniDescription: string,
     description: string
 }
 
@@ -20,7 +21,7 @@ defineProps<{
         <h4 class="note__title text__overflow">{{ note.title }}</h4>
         <div class="note__descriprion">
             <date>{{ note.dateTime }}</date>
-            <span class="text__overflow">{{ note.description }}</span>
+            <span class="text__overflow">{{ note.miniDescription }}</span>
         </div>
     </div>
 </template>
