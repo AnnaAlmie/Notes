@@ -10,9 +10,13 @@ export default defineNuxtConfig({
         },
       },
     },
+    optimizeDeps: {
+      // https://socket.dev/npm/package/nuxt3-localforage
+      include: ['localforage'],
+    },
   },
   //https://icon-sets.iconify.design/
-  modules: ['nuxt-icon'],
+  modules: ['nuxt-icon', 'nuxt3-localforage'],
   vue: {
     compilerOptions: {
       isCustomElement: (tag) => ['date'].includes(tag),

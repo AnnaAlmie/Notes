@@ -41,6 +41,10 @@ textarea {
     height: calc(100vh - 125px);
     border: none;
     outline: none;
+
+    &.focused {
+        outline: 1px solid $color_grey_light;
+    }
 }
 
 .text__overflow {
