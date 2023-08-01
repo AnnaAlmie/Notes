@@ -4,7 +4,7 @@ import { type INote } from 'components/AsideNote.vue';
 const showNoteList = ref<boolean>(false);
 const canEditNote = ref<boolean>(false);
 const activeNote = ref<number>(0);
-let notes: INote[] = reactive([]);
+let notes = reactive<INote[]>([]);
 const localForage = useLocalForage();
 const searchValue = ref<string>('');
 const textarea = ref<string>('');
@@ -12,7 +12,6 @@ const textarea = ref<string>('');
 watch(searchValue, () => {
     const pattern = new RegExp(`${searchValue.value}`, "gi");
     const text = notes[activeNote.value].description;
-    console.log("🚀 ~ file: index.vue:15 ~ watch ~ text:", text)
     textarea.value = text.replace(pattern, `<mark>${searchValue.value}</mark>`)
 })
 
@@ -95,7 +94,7 @@ function saveChanges() {
             </header>
             <template v-if="notes.length">
                 <div class="main__date">{{ notes[activeNote].dateFull }}</div>
-                <!-- TODO: no clue how to combine it correctly-->
+                <!-- TODO: no clue how to combine search with textarea correctly-->
                 <div v-if="searchValue" v-html="textarea"></div>
                 <textarea v-else v-model="notes[activeNote].description" placeholder="No additional text"
                     :readOnly="!canEditNote" @blur="saveChanges" :autofocus="canEditNote"
@@ -104,7 +103,6 @@ function saveChanges() {
         </main>
     </div>
 </template>
-
 
 <style lang="scss" scoped>
 .note__wrapper {

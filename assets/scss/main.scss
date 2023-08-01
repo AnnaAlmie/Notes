@@ -35,6 +35,10 @@ svg {
     transition: $transition_all;
 }
 
+mark {
+    background: $color_active;
+}
+
 textarea {
     resize: none;
     width: 100%;

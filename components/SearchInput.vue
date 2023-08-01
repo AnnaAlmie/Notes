@@ -32,6 +32,5 @@ defineEmits<{
         all: unset;
         max-width: 150px;
     }
-
 }
 </style>
