@@ -43,13 +43,11 @@ defineProps<{
         background-color: transparent;
         transition: $transition_all;
         z-index: -1;
-
     }
 
     &.active {
         &::after {
             background-color: $color_active;
-
         }
     }
 
