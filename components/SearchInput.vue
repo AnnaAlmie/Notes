@@ -1,7 +1,18 @@
+<script setup lang="ts">
+defineProps<{
+    modelValue: String
+}>()
+
+defineEmits<{
+    "update:modelValue": [value: string]
+}>()
+</script>
+
 <template>
     <div class="search">
         <Icon name="iconamoon:search-light" />
-        <input type="text" placeholder="Search" />
+        <input type="text" placeholder="Search" :value="modelValue"
+            @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
     </div>
 </template>
 

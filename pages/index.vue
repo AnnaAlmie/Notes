@@ -4,8 +4,17 @@ import { type INote } from 'components/AsideNote.vue';
 const showNoteList = ref<boolean>(false);
 const canEditNote = ref<boolean>(false);
 const activeNote = ref<number>(0);
-
 let notes: INote[] = reactive([]);
+
+const searchValue = ref<string>('');
+
+const textarea = ref<string>('');
+
+watch(searchValue, () => {
+    const pattern = new RegExp(`${searchValue.value}`, "gi");
+    const text = notes[activeNote.value]?.description;
+    textarea.value = text.replace(pattern, `<mark>${searchValue.value}</mark>`)
+})
 
 function addNote() {
     const newNote = {
@@ -30,6 +39,7 @@ function deleteNote() {
         notes.splice(activeNote.value, 1)
     }
 }
+
 </script>
 
 <template>
@@ -56,11 +66,13 @@ function deleteNote() {
                 <button :class="['edit', { 'active': canEditNote }]" @click="canEditNote = !canEditNote">
                     <Icon name="bx:edit" />
                 </button>
-                <SearchInput />
+                <SearchInput v-model="searchValue" />
             </header>
             <template v-if="notes.length">
                 <div class="main__date">{{ notes[activeNote].dateFull }}</div>
-                <textarea v-model="notes[activeNote].description" name="activeNote" placeholder="No additional text"
+
+                <div v-if="searchValue" v-html="textarea"></div>
+                <textarea v-else v-model="notes[activeNote].description" placeholder="No additional text"
                     :readOnly="!canEditNote"></textarea>
             </template>
         </main>

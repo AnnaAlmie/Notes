@@ -13,4 +13,9 @@ export default defineNuxtConfig({
   },
   //https://icon-sets.iconify.design/
   modules: ['nuxt-icon'],
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => ['date'].includes(tag),
+    },
+  }
 })

@@ -36,6 +36,7 @@ svg {
 }
 
 textarea {
+    resize: none;
     width: 100%;
     height: calc(100vh - 125px);
     border: none;
